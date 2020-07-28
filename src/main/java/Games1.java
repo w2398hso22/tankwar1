@@ -1,6 +1,21 @@
-public class Games1 {
-    public static void main(String[] args) {
-        System.out.println("123456789");
+import javax.swing.*;
+import java.awt.*;
+
+public class Games1 extends JComponent {
+
+    private int screenWidth;
+    private int screenHeight;
+
+    public Games1(int screenWidth, int screenHeight) {
+        this.screenWidth = screenWidth;
+        this.screenHeight = screenHeight;
+        this.setPreferredSize(new Dimension(screenWidth,screenHeight));
+    }
+
+
+
+    Games1(){
+        this.setPreferredSize(new Dimension(800,600));
     }
 
 }
