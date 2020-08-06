@@ -1,6 +1,11 @@
 
 
+import com.sun.xml.internal.bind.v2.schemagen.xmlschema.TypeHost;
+import nana.tools.Tools1;
+
+
 import javax.swing.*;
+import javax.tools.Tool;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.lang.reflect.Array;
@@ -16,9 +21,8 @@ public class Games1 extends JComponent {
 
     private Tank playerTank;
 
-    private List<Tank> enemyTanks=new ArrayList<>(12);
-    private List<Wall> walls=new ArrayList<>();
-    private List<GameObject> objects=new ArrayList<>();
+
+    private List<GameObject> gameobjects=new ArrayList<>();
 
 
 
@@ -60,30 +64,50 @@ public class Games1 extends JComponent {
 
 
     public void init(){
-        playerTank=new Tank(getCenterPosX(47), getCenterPosY(580),Direction.DOWN);
+
+        Image[] brickImage={Tools.getImage("brick.png")};
+        Image[] iTankImg=new Image[8];
+        Image[] eTankImg=new Image[8];
+
+        String[] subName={"U.png","D.png","L.png","R.png","LU.png","RU.png","LD.png","RD.png"};
+
+        for(int i =0;i<iTankImg.length;i++){
+            iTankImg[i]=Tools.getImage("itank"+subName[i]);
+            eTankImg[i]=Tools.getImage("etank"+subName[i]);
+        }
+
+
+
+
+
+
+        playerTank=new Tank(getCenterPosX(47), getCenterPosY(580),Direction.DOWN,iTankImg);
+        gameobjects.add(playerTank);
         for(int i=0;i<3;i++){
             for(int j=0;j<4;j++){
-                enemyTanks.add(new Tank(350+j*80,500+80*i,Direction.UP,true));
+                gameobjects.add(new Tank(350+j*80,500+80*i,Direction.UP,true,eTankImg));
             }
 
         }
-        objects.add(playerTank);
-        objects.addAll((Collection<?extends GameObject>) walls);
-        objects.addAll((Collection<?extends GameObject>) enemyTanks);
+
+        gameobjects.add(new Wall(250, 150, true, 15,brickImage));
+        gameobjects.add(new Wall(150, 200, false, 15,brickImage));
+        gameobjects.add(new Wall(800, 200, false, 15,brickImage));
+
+
+
+
+
+
     }
 
 
     @Override
     protected void paintComponent(Graphics g){
-        playerTank.draw(g);
-        for(Tank tank:enemyTanks){
-            tank.draw(g);
-        }
-        for(Wall wall:walls){
-            wall.draw(g);
-        }
 
-        for(GameObject object:objects){
+
+
+        for(GameObject object:gameobjects){
             object.draw(g);
         }
 

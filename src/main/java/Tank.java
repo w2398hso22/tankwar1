@@ -4,8 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Tank extends GameObject {
-    private int x;
-    private int y;
+
     private int speed;
     private Direction direction;
 
@@ -18,12 +17,12 @@ public class Tank extends GameObject {
     }
 
 
-    public Tank(int x, int y, Direction direction,Image image) {
+    public Tank(int x, int y, Direction direction,Image[] image) {
         this(x,y,direction,false,image);
 
     }
 
-    public Tank(int x, int y, Direction direction,boolean enemy,Image image) {
+    public Tank(int x, int y, Direction direction,boolean enemy,Image[] image) {
         super(x,y,image);
         this.x = x;
         this.y = y;
@@ -36,34 +35,6 @@ public class Tank extends GameObject {
         this.speed = speed;
     }
 
-    public Image getImage(){
-
-        String name= enemy? "etank":"itank";
-
-        if(direction == Direction.UP) {
-            return new ImageIcon("assets/images/"+name+"U.png").getImage();
-        }
-        if(direction == Direction.DOWN) {
-            return new ImageIcon("assets/images/"+name+"D.png").getImage();
-        }
-        if(direction == Direction.LEFT) {
-            return new ImageIcon("assets/images/"+name+"L.png").getImage();
-        }
-        if(direction == Direction.RIGHT) {
-            return new ImageIcon("assets/images/"+name+"R.png").getImage();
-        }
-        if(direction == Direction.UP_RIGHT) {
-            return new ImageIcon("assets/images/"+name+"RU.png").getImage();
-        }
-        if(direction == Direction.UP_LEFT) {
-            return new ImageIcon("assets/images/"+name+"LU.png").getImage();
-        }
-        if(direction == Direction.DOWN_RIGHT) {
-            return new ImageIcon("assets/images/"+name+"RD.png").getImage();
-        }
-        if(direction == Direction.DOWN_LEFT) {
-            return new ImageIcon("assets/images/"+name+"LD.png").getImage();
-        }
 
 
 
@@ -72,8 +43,8 @@ public class Tank extends GameObject {
 
 
 
-        return null;
-    }
+
+
 
     public int getX() {
         return x;
@@ -116,7 +87,7 @@ public class Tank extends GameObject {
             move();
         }
 
-        g.drawImage(getImage(),x,y,null);
+        g.drawImage(image[direction.ordinal()],x,y,null);
     }
 
     public boolean isStop(){
