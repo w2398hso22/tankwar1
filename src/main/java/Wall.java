@@ -31,5 +31,11 @@ public class Wall extends GameObject {
                 g.drawImage(image[0],x,y+i*height,null);
             }
         }
+
+    }
+    @Override
+    public Rectangle getRectangle(){
+        return horizontal? new Rectangle(x,y,bricks*width,height):
+                new Rectangle(x,y,width,bricks*height);
     }
 }

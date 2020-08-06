@@ -82,12 +82,18 @@ public class Tank extends GameObject {
     }
 
     public void draw(Graphics g){
-        if(!isStop()){
+        if(!isStop()) {
             detemainDirection();
             move();
         }
 
+
+
+
+
         g.drawImage(image[direction.ordinal()],x,y,null);
+
+
     }
 
     public boolean isStop(){
@@ -132,5 +138,19 @@ public class Tank extends GameObject {
                 break;
 
         }
+        if(x<0){
+            x=0;
+        }else if(x>TankGame.games1.getWidth()-width){
+            x=TankGame.games1.getWidth()-width;
+        }
+
+        if(y<0){
+            y=0;
+        }else if(y>TankGame.games1.getHeight()-height){
+            y=TankGame.games1.getHeight()-height;
+        }
+
+        
+
     }
 }

@@ -2,6 +2,8 @@ import javax.swing.*;
 import java.awt.*;
 
 public abstract class GameObject {
+    protected int oldx;
+    protected int oldy;
     protected int x;
     protected int y;
     protected int width;
@@ -16,6 +18,10 @@ public abstract class GameObject {
         this.image=image;
         width=image[0].getWidth(null);
         height=image[0].getHeight(null);
+    }
+
+    public Rectangle getRectangle(){
+        return new Rectangle(x,y,width,height);
     }
 
 

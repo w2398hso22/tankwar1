@@ -99,6 +99,9 @@ public class Games1 extends JComponent {
 
 
 
+
+
+
     }
 
 
@@ -145,6 +148,11 @@ public class Games1 extends JComponent {
         }
 
     }
+
+    public List<GameObject> getGameobjects(){
+        return gameobjects;
+    }
+
 
 
     public void keyReleased(KeyEvent e) {
