@@ -9,9 +9,7 @@ import javax.tools.Tool;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
+import java.util.*;
 import java.util.List;
 
 public class Games1 extends JComponent {
@@ -32,7 +30,7 @@ public class Games1 extends JComponent {
     private boolean stop;
 
 
-
+    public static Image[] bulletImg=new Image[8];
 
 
     public Games1(int screenWidth, int screenHeight) {
@@ -53,8 +51,9 @@ public class Games1 extends JComponent {
         }).start();
 
 
-
-
+    }
+    public void addGameObject(GameObject object) {
+        gameobjects.add(object);
     }
 
 
@@ -74,7 +73,9 @@ public class Games1 extends JComponent {
         for(int i =0;i<iTankImg.length;i++){
             iTankImg[i]=Tools.getImage("itank"+subName[i]);
             eTankImg[i]=Tools.getImage("etank"+subName[i]);
+            bulletImg[i]=Tools.getImage("missile"+subName[i]);
         }
+
 
 
 
@@ -108,11 +109,24 @@ public class Games1 extends JComponent {
     @Override
     protected void paintComponent(Graphics g){
 
+        g.setColor(Color.BLACK);
+        g.fillRect(0,0,getWidth(),getHeight());
+
 
 
         for(GameObject object:gameobjects){
             object.draw(g);
+
         }
+
+        Iterator<GameObject> iterator=gameobjects.iterator();
+        while (iterator.hasNext()){
+            if(!iterator.next().alive){
+                iterator.remove();
+            }
+        }
+
+
 
 
     }
@@ -144,6 +158,10 @@ public class Games1 extends JComponent {
                 //playerTank.setDirection(Direction.RIGHT);
                 dirs[3]=true;
                 break;
+            case KeyEvent.VK_CONTROL:
+                playerTank.fire();
+                break;
+
             default:
         }
 

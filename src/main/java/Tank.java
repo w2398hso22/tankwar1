@@ -5,14 +5,14 @@ import java.awt.*;
 
 public class Tank extends GameObject {
 
-    private int speed;
-    private Direction direction;
+    protected int speed;
+    protected Direction direction;
 
-    private boolean[] dirs=new boolean[4];
+    protected boolean[] dirs=new boolean[4];
 
-    private boolean enemy;
+    protected boolean enemy;
 
-    public boolean[] getDirs() {
+    protected boolean[] getDirs() {
         return dirs;
     }
 
@@ -27,7 +27,7 @@ public class Tank extends GameObject {
         this.x = x;
         this.y = y;
         this.direction = direction;
-        speed=5;
+        speed=10;
         this.enemy=enemy;
     }
 
@@ -85,6 +85,8 @@ public class Tank extends GameObject {
         if(!isStop()) {
             detemainDirection();
             move();
+            collision();
+
         }
 
 
@@ -106,38 +108,72 @@ public class Tank extends GameObject {
 
 
 
-    public void move(){
-        switch (direction){
+    public void move() {
+        oldx=x;
+        oldy=y;
+        switch (direction) {
             case UP:
-                y-=speed;
+                y -= speed;
                 break;
             case DOWN:
-                y+=speed;
+                y += speed;
                 break;
             case LEFT:
-                x-=speed;
+                x -= speed;
                 break;
             case RIGHT:
-                x+=speed;
+                x += speed;
                 break;
             case UP_RIGHT:
-                y-=speed;
-                x+=speed;
+                y -= speed;
+                x += speed;
                 break;
             case UP_LEFT:
-                y-=speed;
-                x-=speed;
+                y -= speed;
+                x -= speed;
                 break;
             case DOWN_RIGHT:
-                y+=speed;
-                x+=speed;
+                y += speed;
+                x += speed;
                 break;
             case DOWN_LEFT:
-                y+=speed;
-                x-=speed;
+                y += speed;
+                x -= speed;
                 break;
 
         }
+
+
+    }
+    public  void fire(){
+        Bullet bullet=new Bullet(x,y,direction,false,TankGame.games1.bulletImg);
+        TankGame.games1.addGameObject(bullet);
+
+    }
+
+    public boolean collisionBound(){
+        boolean collision=false;
+
+        if(x<0){
+            x=0;
+            collision=true;
+        }else if(x>TankGame.games1.getWidth()-width){
+            x=TankGame.games1.getWidth()-width;
+            collision=true;
+        }
+
+        if(y<0){
+            y=0;
+            collision=true;
+        }else if(y>TankGame.games1.getHeight()-height){
+            y=TankGame.games1.getHeight()-height;
+            collision=true;
+        }
+        return collision;
+
+    }
+
+    public void collision(){
         if(x<0){
             x=0;
         }else if(x>TankGame.games1.getWidth()-width){
@@ -150,7 +186,19 @@ public class Tank extends GameObject {
             y=TankGame.games1.getHeight()-height;
         }
 
-        
+        for(GameObject object:TankGame.games1.getGameobjects()){
+            if(object!=this){
+                if(object.getRectangle().intersects(getRectangle())){
+                    x=oldx;
+                    y=oldy;
+                    return;
+                }
+            }
+        }
+
+
 
     }
-}
+
+    }
+

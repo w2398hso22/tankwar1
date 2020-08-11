@@ -8,6 +8,7 @@ public abstract class GameObject {
     protected int y;
     protected int width;
     protected int height;
+    protected boolean alive;
 
     protected Image[] image;
 
@@ -15,6 +16,7 @@ public abstract class GameObject {
     public GameObject(int x,int y,Image[] image){
         this.x=x;
         this.y=y;
+        this.alive=true;
         this.image=image;
         width=image[0].getWidth(null);
         height=image[0].getHeight(null);
@@ -23,6 +25,8 @@ public abstract class GameObject {
     public Rectangle getRectangle(){
         return new Rectangle(x,y,width,height);
     }
+
+
 
 
 
