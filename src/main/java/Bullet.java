@@ -18,15 +18,15 @@ public class Bullet extends Moveobject {
     }
 
     @Override
-    public void collision(){
+    public boolean collision(){
         if(collisionBound()){
             alive=false;
-            return;
+            return true;
         }
 
 
         for(GameObject object:TankGame.games1.getGameobjects()){
-            if(object==this) {
+            if(object instanceof Bullet||object instanceof Explosion) {
                 continue;
             }
 
@@ -41,9 +41,12 @@ public class Bullet extends Moveobject {
                 if(object instanceof Tank){
                     object.alive=false;
                 }
-                return;
+                TankGame.games1.addGameObject(new Explosion(x,y,Games1.expLosionImg));
+
+                return true;
             }
             }
+        return false;
         }
 
 

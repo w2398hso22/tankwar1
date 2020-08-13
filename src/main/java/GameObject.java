@@ -11,6 +11,7 @@ public abstract class GameObject {
     protected boolean alive;
 
     protected Image[] image;
+    protected int frame;
 
 
     public GameObject(int x,int y,Image[] image){

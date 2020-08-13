@@ -11,16 +11,19 @@ import java.awt.event.KeyEvent;
 import java.lang.reflect.Array;
 import java.util.*;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Games1 extends JComponent {
 
     private int screenWidth;
     private int screenHeight;
 
-    private Tank playerTank;
+    private PlayerTank playerTank;
 
 
-    private List<GameObject> gameobjects=new ArrayList<>();
+    private CopyOnWriteArrayList<GameObject> gameobjects=new CopyOnWriteArrayList<>();
+
+
 
 
 
@@ -31,6 +34,7 @@ public class Games1 extends JComponent {
 
 
     public static Image[] bulletImg=new Image[8];
+    public static Image[] expLosionImg=new Image[11];
 
 
     public Games1(int screenWidth, int screenHeight) {
@@ -75,6 +79,9 @@ public class Games1 extends JComponent {
             eTankImg[i]=Tools.getImage("etank"+subName[i]);
             bulletImg[i]=Tools.getImage("missile"+subName[i]);
         }
+        for(int i=0;i<expLosionImg.length;i++){
+            expLosionImg[i]=Tools.getImage(i+".png");
+        }
 
 
 
@@ -82,11 +89,11 @@ public class Games1 extends JComponent {
 
 
 
-        playerTank=new Tank(getCenterPosX(47), getCenterPosY(580),Direction.DOWN,iTankImg);
+        playerTank=new PlayerTank(getCenterPosX(47), getCenterPosY(580),Direction.DOWN,iTankImg);
         gameobjects.add(playerTank);
         for(int i=0;i<3;i++){
             for(int j=0;j<4;j++){
-                gameobjects.add(new Tank(350+j*80,500+80*i,Direction.UP,true,eTankImg));
+                gameobjects.add(new EnemyTank(350+j*80,500+80*i,Direction.UP,true,eTankImg));
             }
 
         }
@@ -119,12 +126,20 @@ public class Games1 extends JComponent {
 
         }
 
-        Iterator<GameObject> iterator=gameobjects.iterator();
-        while (iterator.hasNext()){
-            if(!iterator.next().alive){
-                iterator.remove();
+        for(GameObject object:gameobjects){
+            if(!object.alive){
+                gameobjects.remove(object);
             }
+
         }
+
+
+        //Iterator<GameObject> iterator=gameobjects.iterator();
+        //while (iterator.hasNext()){
+            //if(!iterator.next().alive){
+                //iterator.remove();
+            //}
+        //}
 
 
 

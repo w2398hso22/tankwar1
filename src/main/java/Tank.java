@@ -47,6 +47,8 @@ public class Tank extends Moveobject {
 
 
 
+
+
     public void setDirection(Direction direction) {
         this.direction = direction;
     }
@@ -92,15 +94,18 @@ public class Tank extends Moveobject {
 
 
 
+
+
     public  void fire(){
-        Bullet bullet=new Bullet(x,y,direction,false,TankGame.games1.bulletImg);
+        Bullet bullet = new Bullet(x+(width-Games1.bulletImg[0].getWidth(null))/2,
+                y+(height-Games1.bulletImg[0].getHeight(null))/2, direction, enemy, Games1.bulletImg);
         TankGame.games1.addGameObject(bullet);
 
     }
 
 
     @Override
-    public void collision(){
+    public boolean collision(){
         if(x<0){
             x=0;
         }else if(x>TankGame.games1.getWidth()-width){
@@ -118,10 +123,11 @@ public class Tank extends Moveobject {
                 if(object.getRectangle().intersects(getRectangle())){
                     x=oldx;
                     y=oldy;
-                    return;
+                    return true;
                 }
             }
         }
+        return false;
 
 
 
